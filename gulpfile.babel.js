@@ -37,29 +37,23 @@ gulp.task('libs', () => {
 });
 
 gulp.task('scripts', () => {
-  return gulp.src([
-    'src/**/*.js',
-    '!src/libs/**/*.js',
-    '!src/js/*.js'
-    ])
-    .pipe(concat('scripts.js'))
+    return gulp.src('src/js/*.js')
     .pipe(uglify())
     .pipe(babel())
-    .pipe(gulp.dest('src/js'))
-    .pipe(browserSync.reload({stream: true}))
+    .pipe(gulp.dest('dist/js'));
 });
 
 gulp.task('css', ['sass'], () => {
     return gulp.src('src/css/*.css')
-      .pipe(cssnano())
-      .pipe(rename({suffix: '.min'}))
-      .pipe(gulp.dest('dist/css'));
+    .pipe(cssnano())
+    .pipe(rename({suffix: '.min'}))
+    .pipe(gulp.dest('dist/css'));
 });
 
 gulp.task('watch', ['browser-sync'], () => {
-    gulp.watch('src/**/*.sass', ['sass']);
-    gulp.watch('src/**/*.js', ['scripts']);
+    gulp.watch('src/sass/**/*.sass', ['sass']);
     gulp.watch('src/*.html', browserSync.reload);
+    gulp.watch('src/js/**/*.js', browserSync.reload);
 });
 
 gulp.task('clean', () => {
