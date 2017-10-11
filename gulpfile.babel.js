@@ -28,11 +28,25 @@ gulp.task('browser-sync', () => {
     });
 });
 
-gulp.task('scripts', () => {
-  return gulp.src('src/js/*.js')
+gulp.task('libs', () => {
+  return gulp.src('src/libs/**/*.js')
+    .pipe(concat('libs.js'))
     .pipe(uglify())
     .pipe(babel())
-    .pipe(gulp.dest('dist/js'));
+    .pipe(gulp.dest('src/js'))
+});
+
+gulp.task('scripts', () => {
+  return gulp.src([
+    'src/**/*.js',
+    '!src/libs/**/*.js',
+    '!src/js/*.js'
+    ])
+    .pipe(concat('scripts.js'))
+    .pipe(uglify())
+    .pipe(babel())
+    .pipe(gulp.dest('src/js'))
+    .pipe(browserSync.reload({stream: true}))
 });
 
 gulp.task('css', ['sass'], () => {
@@ -43,9 +57,9 @@ gulp.task('css', ['sass'], () => {
 });
 
 gulp.task('watch', ['browser-sync'], () => {
-    gulp.watch('src/sass/**/*.sass', ['sass']);
+    gulp.watch('src/**/*.sass', ['sass']);
+    gulp.watch('src/**/*.js', ['scripts']);
     gulp.watch('src/*.html', browserSync.reload);
-    gulp.watch('src/js/**/*.js', browserSync.reload);
 });
 
 gulp.task('clean', () => {
