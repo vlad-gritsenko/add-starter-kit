@@ -3,6 +3,7 @@
   "version": "2.1.0",
   "description": "",
   "main": "gulpfile.babel.js",
+
   "dependencies": {},
   "devDependencies": {
     "babel-core": "^6.26.0",

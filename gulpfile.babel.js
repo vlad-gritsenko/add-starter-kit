@@ -1,15 +1,15 @@
 const   gulp          = require('gulp'),
-        babel         = require('gulp-babel'),
-        sass          = require('gulp-sass'),
-        autoprefixer  = require('gulp-autoprefixer'),
-        browserSync   = require('browser-sync'),
-        concat        = require('gulp-concat'),
-        uglify        = require('gulp-uglifyjs'),
-        cssnano       = require('gulp-cssnano'),
-        rename        = require('gulp-rename'),
-        del           = require('del'),
-        imagemin      = require('gulp-imagemin'),
-        cache         = require('gulp-cache');
+    babel         = require('gulp-babel'),
+    sass          = require('gulp-sass'),
+    autoprefixer  = require('gulp-autoprefixer'),
+    browserSync   = require('browser-sync'),
+    concat        = require('gulp-concat'),
+    uglify        = require('gulp-uglifyjs'),
+    cssnano       = require('gulp-cssnano'),
+    rename        = require('gulp-rename'),
+    del           = require('del'),
+    imagemin      = require('gulp-imagemin'),
+    cache         = require('gulp-cache');
 
 gulp.task('sass', () => {
     return gulp.src('src/sass/**/*.sass')
@@ -29,26 +29,26 @@ gulp.task('browser-sync', () => {
 });
 
 gulp.task('libs', () => {
-  return gulp.src('src/libs/**/*.js')
-    .pipe(concat('libs.js'))
-    .pipe(uglify())
-    .pipe(babel())
-    .pipe(gulp.dest('dist/js'))
+    return gulp.src('src/libs/**/*.js')
+        .pipe(concat('libs.js'))
+        .pipe(uglify())
+        .pipe(babel())
+        .pipe(gulp.dest('dist/js'))
 });
 
 gulp.task('scripts', () => {
     return gulp.src('src/js/*.js')
-    .pipe(concat('scripts.js'))
-    .pipe(uglify())
-    .pipe(babel())
-    .pipe(gulp.dest('dist/js'));
+        .pipe(concat('scripts.js'))
+        .pipe(uglify())
+        .pipe(babel())
+        .pipe(gulp.dest('dist/js'));
 });
 
 gulp.task('css', ['sass'], () => {
     return gulp.src('src/css/*.css')
-    .pipe(cssnano())
-    .pipe(rename({suffix: '.min'}))
-    .pipe(gulp.dest('dist/css'));
+        .pipe(cssnano())
+        .pipe(rename({suffix: '.min'}))
+        .pipe(gulp.dest('dist/css'));
 });
 
 gulp.task('watch', ['browser-sync'], () => {
@@ -80,12 +80,12 @@ gulp.task('build', ['clean', 'sass', 'scripts', 'libs', 'css', 'img'], () => {
     let buildCss = gulp.src([
         'src/css/main.css',
         'src/css/libs.min.css'
-        ])
-    .pipe(gulp.dest('dist/css'));
+    ])
+        .pipe(gulp.dest('dist/css'));
 
     let buildFonts = gulp.src('src/fonts/**/*')
-    .pipe(gulp.dest('dist/fonts'));
+        .pipe(gulp.dest('dist/fonts'));
 
     let buildHtml = gulp.src('src/*.html')
-    .pipe(gulp.dest('dist'));
+        .pipe(gulp.dest('dist'));
 });
